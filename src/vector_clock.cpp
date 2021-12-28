@@ -31,14 +31,7 @@ private:
     static constexpr char kSignatureKeyIdFieldName[] = "keyId";
 };
 
-
-const VectorClock::ComponentArray<std::unique_ptr<VectorClock::ComponentFormat>>
-    VectorClock::_gossipFormatters {
-        std::make_unique<VectorClock::SignedComponentFormat>(VectorClock::kClusterTimeFieldName),
-        std::make_unique<VectorClock::OnlyOutOnNewFCVComponentFormat<VectorClock::PlainComponentFormat>>(VectorClock::kConfigTimeFieldName),
-        std::make_unique<VectorClock::OnlyOutOnNewFCVComponentFormat<VectorClock::PlainComponentFormat>>(VectorClock::kTopologyTimeFieldName)
-	};
-
+//
 
 VectorClock::VectorTime VectorClock::getTime() const {
 //    stdx::lock_guard<Latch> lock(_mutex);
@@ -87,10 +80,6 @@ void VectorClock::_advanceTime(LogicalTimeArray &&newTime) {
 			*it = std::move(*newIt);
 		}
 	}
-}
-
-std::string VectorClock::_componentName(Component component) {
-	return _gossipFormatters[component]->_fieldName;
 }
 
 bool VectorClock::isEnabled() const {

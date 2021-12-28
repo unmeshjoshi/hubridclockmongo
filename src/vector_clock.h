@@ -186,7 +186,6 @@ private:
     class SignedComponentFormat;
     template <class ActualFormat>
     class OnlyOutOnNewFCVComponentFormat;
-    static const ComponentArray<std::unique_ptr<ComponentFormat>> _gossipFormatters;
 
 };
 
